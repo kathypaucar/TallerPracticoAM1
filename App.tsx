@@ -1,12 +1,14 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import PantallaInicioSesionScreen from './screens/PantallaRegistroScreen'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {PantallaInicioSesionScreen} from './screens/PantallaInicioSesionScreen'
+import { PantallaRegistroScreen } from './screens/PantallaRegistroScreen';
 
 
 export const App = () => {
   return (
-    <View>
-      <PantallaInicioSesionScreen/>
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <PantallaRegistroScreen/>
+    </SafeAreaView>
   )
 }
+
+export default App;

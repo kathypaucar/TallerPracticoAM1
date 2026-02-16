@@ -1,22 +1,39 @@
 import React, { useState } from "react";
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from "react-native";
 
-const PantallaInicioSesionScreen = () => {
+export const PantallaRegistroScreen = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
 
-  const handleLogin = () => {
-    if (!email || !password) {
+  const ingresar = () => {
+    if (!email || !password || !confirmPassword || !name || !lastName) {
       Alert.alert("Error", "Todos los campos son obligatorios");
       return;
     }
 
-    Alert.alert("Login correcto", `Bienvenido ${email}`);
+    Alert.alert("Registro correcto", `Bienvenido ${name} ${lastName}`);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
+      <Text style={styles.title}>Registro</Text>
+
+      <TextInput
+        placeholder="Nombre"
+        value={name}
+        onChangeText={setName}
+        style={styles.input}
+      />
+
+      <TextInput
+        placeholder="Apellido"
+        value={lastName}
+        onChangeText={setLastName}
+        style={styles.input}
+      />
 
       <TextInput
         placeholder="Correo electrónico"
@@ -32,28 +49,33 @@ const PantallaInicioSesionScreen = () => {
         value={password}
         onChangeText={setPassword}
         style={styles.input}
-        secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Ingresar</Text>
+      <TextInput
+        placeholder="Confirmar Contraseña"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        style={styles.input}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={ingresar}>
+        <Text style={styles.buttonText}>Registrarse</Text>
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <Text style={styles.link}>¿No tienes cuenta? Regístrate</Text>
+        <Text style={styles.link}>¿Si ya tienes cuenta? Inicia Sesión</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default PantallaInicioSesionScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     padding: 25,
-    backgroundColor: "#f2f2f2"
+    backgroundColor: "#E6CCC8"
   },
   title: {
     fontSize: 28,
