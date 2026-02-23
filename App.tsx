@@ -1,13 +1,12 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {PantallaInicioSesionScreen} from './screens/PantallaInicioSesionScreen'
-import { PantallaRegistroScreen } from './screens/PantallaRegistroScreen';
+import { StackNavigator } from './src/navigator/StackNavigator';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 export const App = () => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <PantallaRegistroScreen/>
-    </SafeAreaView>
+    <NavigationContainer>
+      <StackNavigator/>
+    </NavigationContainer>
   )
 }
 
