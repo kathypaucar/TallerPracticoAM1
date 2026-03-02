@@ -2,26 +2,42 @@ import React, { useState } from "react";
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image} from "react-native";
 import { stylesGlobal } from "../theme/appTheme";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParams } from "../navigator/StackNavigator";
-
-type Props = StackScreenProps<RootStackParams, "PantallaInicioSesion">;
+import { CommonActions, useNavigation } from "@react-navigation/native";
+import { User } from '../navigator/StackNavigator';
 
   interface FormLogin {
     email: string;
     password: string;
 }
 
-export const PantallaInicioSesionScreen = ({navigation}: Props) => {
+interface Props{
+  users: User[];
+}
+
+export const PantallaInicioSesionScreen = ({users}: Props) => {
   const [formLogin, setFormLogin] = useState<FormLogin>({
         email: ' ',
         password: ' '
     });
+
+    //hook useNavigation: permite navegar de una pantalla a otr
+    const navigation = useNavigation();
 
 
     //funcion que captura los datso del formulario
     const handleChangeValue = (name: string, value: string): void => {
         //llamas funcion para actualizar el estado del formulario
         setFormLogin({...formLogin, [name]: value});
+    }
+
+    //para verificar si existe el usuario
+    const verifyUser =() => {
+      console.log(formLogin);
+      console.log(users);
+
+      const exisUser = users.find(user => user.email === formLogin.email && user.password === formLogin.password);
+      console.log(exisUser);
+      return exisUser;
     }
 
     //funcion iniciar sesion
@@ -31,9 +47,15 @@ export const PantallaInicioSesionScreen = ({navigation}: Props) => {
       Alert.alert("Error", "Todos los campos son obligatorios");
       return;
     }
-
+    //validar la existencia del usuario
+    if(!verifyUser()){
+      Alert.alert("Error", "Usuario y/o contraseña incorrectos")
+      return;
+    }
+    // si todo esta check se va a la navegacion home
     Alert.alert("Login correcto", `Bienvenido ${email}`);
-        console.log(formLogin);
+    navigation.dispatch(CommonActions.navigate({name: 'PantallaHome'}))
+        //console.log(formLogin);
     }
 
   return (
@@ -65,7 +87,7 @@ export const PantallaInicioSesionScreen = ({navigation}: Props) => {
         <Text style={stylesGlobal.buttonText}>Ingresar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={()=> navigation.navigate("PantallaRegistro")}>
+      <TouchableOpacity onPress={()=> navigation.dispatch(CommonActions.navigate({name: 'PantallaRegistro'}))}>
         <Text style={stylesGlobal.link}
        >¿No tienes cuenta? Regístrate</Text>
       </TouchableOpacity>
